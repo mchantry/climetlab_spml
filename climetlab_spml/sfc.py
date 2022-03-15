@@ -15,9 +15,7 @@ __version__ = "0.1.0"
 
 URL = "https://storage.ecmwf.europeanweather.cloud/SPML"
 
-PATTERN = (
-    "{url}/{field_type}_{date}.grib"
-)
+PATTERN = "{url}/{field_type}_{date}.grib"
 
 
 class Sfc(Dataset):
@@ -42,7 +40,5 @@ class Sfc(Dataset):
 
     @normalize("date", "date(%Y%m%d)")
     def __init__(self, date):
-        request = dict(url=URL, date=date,
-                       field_type = "sfc"
-        )
+        request = dict(url=URL, date=date, field_type="sfc")
         self.source = cml.load_source("url-pattern", PATTERN, request)

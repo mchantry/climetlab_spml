@@ -15,11 +15,9 @@ __version__ = "0.1.0"
 
 URL = "https://storage.ecmwf.europeanweather.cloud/SPML"
 
-PATTERN = (
-    "{url}/{field_type}_{date}_{parameter}.grib"
-)
+PATTERN = "{url}/{field_type}_{date}_{parameter}.grib"
 
-ml_fields = ["u","cc","v","t","q","clwc","ciwc","w"]
+ml_fields = ["u", "cc", "v", "t", "q", "clwc", "ciwc", "w"]
 
 
 class Ml(Dataset):
@@ -42,12 +40,10 @@ class Ml(Dataset):
 
     dataset = None
 
-    @normalize("parameter", ml_fields + ['all'])
+    @normalize("parameter", ml_fields + ["all"])
     @normalize("date", "date(%Y%m%d)")
     def __init__(self, date, parameter):
-        if parameter == 'all':
-            paramater = ml_fields
-        request = dict(parameter=parameter, url=URL, date=date,
-                       field_type = "ml"
-        )
+        if parameter == "all":
+            parameter = ml_fields
+        request = dict(parameter=parameter, url=URL, date=date, field_type="ml")
         self.source = cml.load_source("url-pattern", PATTERN, request)
